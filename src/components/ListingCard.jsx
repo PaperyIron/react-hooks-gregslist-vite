@@ -1,5 +1,22 @@
 function ListingCard({ description, image, location, favorite  }) {
 
+    const handleFavorite = () => {
+    fetch(`http://localhost:6001/listings${id}`, {
+            method: "PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({favorite: !favorite})
+    })
+      .then(r => {
+        if (!r.ok) {throw new Error("failed to favorite listing") }
+          return r.json()
+        })
+      .then(updateListing)
+      .catch(error => console.log(error.message))
+  }
+
+  // rest of ListingCard
+}
+
   return (
     <li className="card">
       <div className="image">
@@ -8,9 +25,9 @@ function ListingCard({ description, image, location, favorite  }) {
       </div>
       <div className="details">
         {true ? (
-          <button className="emoji-button favorite active">★</button>
+          <button onClick={handleFavorite} className="emoji-button favorite active">★</button>
         ) : (
-          <button className="emoji-button favorite">☆</button>
+          <button onClick={handleFavorite} className="emoji-button favorite">☆</button>
         )}
         <strong>{"description"}</strong>
         <span> · {"location"}</span>

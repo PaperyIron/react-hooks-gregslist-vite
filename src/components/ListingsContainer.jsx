@@ -8,6 +8,7 @@ function ListingsContainer({ listings }) {
         {listings.map(listing => <ListingCard
           key={listing.id}
           {...listing}
+          updateListing={updateListing}
           />)}
       </ul>
     </main>

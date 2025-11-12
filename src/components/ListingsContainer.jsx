@@ -1,6 +1,6 @@
 // import ListingCard from "./ListingCard";
 
-function ListingsContainer({ listings }) {
+function ListingsContainer({ listings, updateListing, deleteListing }) {
   return (
     <main>
       <ul className="cards">
@@ -9,6 +9,7 @@ function ListingsContainer({ listings }) {
           key={listing.id}
           {...listing}
           updateListing={updateListing}
+          deleteListing={deleteListing}
           />)}
       </ul>
     </main>

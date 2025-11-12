@@ -1,6 +1,6 @@
-function ListingCard({ description, image, location, favorite  }) {
+function ListingCard({ id, image, description, location, favorite, updateListing }) {
 
-    const handleFavorite = () => {
+  const handleFavorite = () => {
     fetch(`http://localhost:6001/listings${id}`, {
             method: "PATCH",
             headers: {"Content-Type": "application/json"},
@@ -14,8 +14,17 @@ function ListingCard({ description, image, location, favorite  }) {
       .catch(error => console.log(error.message))
   }
 
-  // rest of ListingCard
-}
+  // add fetch request
+  const handleDelete = () => {
+    fetch(`http://localhost:6001/listings${id}`, {
+            method: "DELETE"
+    })
+      .then(r => {
+          if (!r.ok) {throw new Error("failed to favorite listing") }
+          deleteListing(id)
+        })
+      .catch(error => console.log(error.message))
+  }
 
   return (
     <li className="card">
@@ -24,14 +33,14 @@ function ListingCard({ description, image, location, favorite  }) {
         <img src={image} alt={description} />
       </div>
       <div className="details">
-        {true ? (
+        {favorite ? (
           <button onClick={handleFavorite} className="emoji-button favorite active">★</button>
         ) : (
           <button onClick={handleFavorite} className="emoji-button favorite">☆</button>
         )}
-        <strong>{"description"}</strong>
-        <span> · {"location"}</span>
-        <button className="emoji-button delete">🗑</button>
+        <strong>{description}</strong>
+        <span> · {location}</span>
+        <button onClick={handleDelete} className="emoji-button delete">🗑</button>
       </div>
     </li>
   );

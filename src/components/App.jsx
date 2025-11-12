@@ -23,6 +23,11 @@ function App() {
       listing.id === updatedListing.id ? updatedListing : listing
     ));
 
+  const deleteListing = deletedListingId =>
+    setListings(previousListings => 
+    previousListings.filter(listing => listing.id !== deletedListingId)
+    )
+
   return (
     <div className="app">
       <Header />

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [listings, setListings] = useState([])
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     fetch("http://localhost:6001/listings")
@@ -28,11 +29,15 @@ function App() {
     previousListings.filter(listing => listing.id !== deletedListingId)
     )
 
+  const displayedListings = listings.filter((listing) => 
+  listing.description.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="app">
-      <Header />
-      <ListingForm />
-      <ListingsContainer listings={listings} updateListing={updateListing}/>
+      <Header onSearch={setSearch}/>
+      <ListingForm addListing={addListing}/>
+      <ListingsContainer listings={displayedListings} updateListing={updateListing} deleteListing={deleteListing}/>
     </div>
   );
 }
